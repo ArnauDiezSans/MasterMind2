@@ -1,0 +1,11 @@
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\bin\Debug\MasterMind2.exe.config
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\bin\Debug\MasterMind2.exe
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\bin\Debug\MasterMind2.pdb
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind.csprojAssemblyReference.cache
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind.Nivell.resources
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind2.Properties.Resources.resources
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind.csproj.GenerateResource.cache
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind.csproj.CoreCompileInputs.cache
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind2.exe
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind2.pdb
+C:\Users\Arnau\source\repos\MasterMind2\MasterMind2\obj\Debug\MasterMind.Master_Mind.resources
