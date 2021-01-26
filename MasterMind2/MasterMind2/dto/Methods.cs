@@ -35,20 +35,22 @@ namespace MasterMind
             for (int i = 0; i < bolascolores.Length; i++)
             {
                 bolascolores[i] = crear_bola(colors[i],i, MM);
+                bolascolores[i].Location = new System.Drawing.Point(35-8*(bolascolores.Length-4) + (43 * i), 50);
             }
+            // asignamos los las bolas con todos sus eventos de onclick para la paleta
             bolascolores[0].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[0], MM); };
             bolascolores[1].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[1], MM); };
             bolascolores[2].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[2], MM); };
             bolascolores[3].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[3], MM); };
-            if (numeroColores==5)
+            if (numeroColores==5) // si son 5 colores añade el evento para el 5º color
             {
                 bolascolores[4].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[4], MM); };
             }
-            if (numeroColores == 6)
+            if (numeroColores == 6) // si son 6 colores añade el evento para el 5º y 6º color
             {
+                bolascolores[4].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[4], MM); };
                 bolascolores[5].Click += (sender, EventArgs) => { Organitzador.copiarColor_Click(sender, EventArgs, bolascolores[5], MM); };
             }
-            
 
             return bolascolores;
         }
@@ -65,7 +67,6 @@ namespace MasterMind
             for (int i = 0; i < bolassolucion.Length; i++)
             {
                 bolassolucion[i] = crear_bola(colors[r.Next(0, casillasTotales)],i, MM);
-                //bolassolucion[i].Hide();
             }
             return bolassolucion;
 
@@ -76,50 +77,55 @@ namespace MasterMind
             // método para generar cuatro bolas vacias para que el jugador pueda seleccionar el color
             // y enviar el contenido a revisar
 
-            
+            // generamos un array de bolas vacias
             PictureBox[] bolasVacias = new PictureBox[casillasTotales];
 
+            // recorremos el array y la llenamos usando el método
             for (int i = 0; i < casillasTotales; i++)
             {
+                // añadimos la bola en cada posición con una localización diferente para que se espacien horizontalmente
                 bolasVacias[i] = crear_bola(Color.White,i, MM);
                 bolasVacias[i].Location = new Point(bolasVacias[i].Location.X-30, bolasVacias[i].Location.Y + (offset * 43));
             }
+            // añadimos el evento onclick para poder pintarlas
             bolasVacias[0].Click += (sender, EventArgs) => { Organitzador.pegarColor_Click(sender, EventArgs, bolasVacias[0], MM); };
             bolasVacias[1].Click += (sender, EventArgs) => { Organitzador.pegarColor_Click(sender, EventArgs, bolasVacias[1], MM); };
             bolasVacias[2].Click += (sender, EventArgs) => { Organitzador.pegarColor_Click(sender, EventArgs, bolasVacias[2], MM); };
             bolasVacias[3].Click += (sender, EventArgs) => { Organitzador.pegarColor_Click(sender, EventArgs, bolasVacias[3], MM); };
             for (int i = 0; i < casillasTotales; i++) // recorremos el array de objetos
             {
+                // añadimos las bolas y las printamos en el panel 1
                 MM.panel1.Controls.Add(bolasVacias[i]);
             }
 
+            // generamos un nuevo boton enviar
             Button enviar = new Button();
             enviar.Text = "Enviar";
             enviar.Location = new System.Drawing.Point(212, 50);
             enviar.Location= new Point(enviar.Location.X,enviar.Location.Y+ (offset*43));
-            MM.panel1.Controls.Add(enviar);
+            MM.panel1.Controls.Add(enviar); // lo asignamos al panel junto con los botones
+            // añadimos el evento onclick para poder enviar a ejecutar las comprobaciones
             enviar.Click += (sender, EventArgs) => { Organitzador.enviar_Click(enviar, EventArgs, bolasVacias, offset, colors, MM, solucio); };
         }
 
         public static PictureBox crear_bola(Color color, int repeticio, Master_Mind MM)
         {
             // método per crear una bola con el color pasado por parámetro
-
+            
             PictureBox bola = new PictureBox();
 
-            bola.Width = 26;
-            bola.Height = 26;
+            bola.Width = bolaAmple;
+            bola.Height = bolaAltura;
             bola.BorderStyle = BorderStyle.FixedSingle;
             bola.Margin = new System.Windows.Forms.Padding(bolaMarginLeft, bolaMarginTop, bolaMarginRight, bolaMarginBottom);
             bola.BackColor = color;
             bola.Left = 300;
             bola.Location = new System.Drawing.Point(70 + (43 * repeticio), 50);
-            bola.Name = "bola"+Convert.ToString(MM.contadorBoles);
+            bola.Name = "bola"+Convert.ToString(MM.contadorBoles); // asignamos el nombre con un contador para poner nombres diferentes
             bola.TabIndex = 0;
             bola.TabStop = false;
             bola.Show();
             MM.contadorBoles++;
-
 
             return bola;
         }
@@ -133,62 +139,69 @@ namespace MasterMind
             int[] posicionsNegres = new int[4] { 0,0,0,0};
             PictureBox[] resultat = new PictureBox[solucio.Length];
 
-            if (offset == 9)
+            // comprobamos y printamos los intentos
+            MM.label3.Text = ("Intentos Restantes: " + (9 - offset));
+            if (offset == 9) // si ha llegado a 10 intentos, terminamos el juego
             {
                 MessageBox.Show("GAME OVER");
                 Application.Exit();
             }
+
+            // recorremos el array de la solución comparándolo con el array pasado
             for (int i = 0; i < linea.Length; i++)
             {
-                if (linea[i].BackColor == solucio[i].BackColor)
+                if (linea[i].BackColor == solucio[i].BackColor) // si coincide
                 {
-                    negras++;
-                    posicionsNegres[i] = 1;
+                    negras++; // sumamos una a las negras 
+                    posicionsNegres[i] = 1; // guardamos la posición
                 }
-                else
+                else // si no es del mismo color
                 {
-                    for (int x = 0; x < linea.Length; x++)
+                    for (int x = 0; x < linea.Length; x++) // recorremos el array y lo comprobamos con el color
                     {
-                        if ((linea[x].BackColor == solucio[x].BackColor) && (posicionsNegres[x] == 0))
+                        if ((linea[i].BackColor == solucio[x].BackColor) && (posicionsNegres[x] == 0)) // si coincice el color pero no la posicion
                         {
-                            blancas++;
+                            blancas++; // sumamos blancas
                         }
                     }
                 }
             }
             
+            // recorremos el array anterior
             for (int i = 0; i < linea.Length; i++)
             {
-                if (negras > 0)
+                if (negras > 0) // printamos las negras
                 {
                     resultat[i] = crear_bola(Color.Black, i, MM);
                     resultat[i].Location = new Point(resultat[i].Location.X - 30, resultat[i].Location.Y + (offset * 43));                
                     negras--;
                     guanyar++;
                 }
-                else if (blancas > 0)
+                else if (blancas > 0) // printamos las blancas
                 {
                     resultat[i] = crear_bola(Color.White, i, MM);
                     resultat[i].Location = new Point(resultat[i].Location.X - 30, resultat[i].Location.Y + (offset * 43));
                     blancas--;
                 }
-                else
+                else // printamos las grises
                 {
                     resultat[i] = crear_bola(Color.Gray, i, MM);
                     resultat[i].Location = new Point(resultat[i].Location.X - 30, resultat[i].Location.Y + (offset * 43));
                 }
             }
+            // añadimos el array al panel de resultados
             for (int i = 0; i < resultat.Length; i++) // recorremos el array de objetos
             {
 
                 MM.panel2.Controls.Add(resultat[i]);
             }
 
+            // si coinciden las 4 bolas negras, has ganado
             if (guanyar == 4)
             {
                 MessageBox.Show("Enhorabona! Has Guanyat");
             }
-            else
+            else // si no reseteamos el contador para la siguiente entrada
             {
                 guanyar = 0;
             }
