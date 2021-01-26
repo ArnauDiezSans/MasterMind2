@@ -36,10 +36,23 @@ namespace MasterMind
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            PictureBox bola; 
-            for (int x = 5; x < 9; x++)
+            PictureBox bola;
+            int x = 5;
+            int y = 9;
+            if (_Dificultat == 5)
             {
-                bola = (System.Windows.Forms.PictureBox)panel3.Controls["bola" + Convert.ToString(x)]; //agafem cada botó
+                x = 6;
+                y = 10;
+            }
+            if (_Dificultat == 6)
+            {
+                x = 7;
+                y = 11;
+            }
+
+            for (int i = x ; i < y; i++)
+            {
+                bola = (System.Windows.Forms.PictureBox)panel3.Controls["bola" + Convert.ToString(i)]; //agafem cada botó
                 bola.Visible = true; // treiem lo text
                 bola.Update(); // actualitzem
             }
