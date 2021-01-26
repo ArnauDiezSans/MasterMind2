@@ -20,7 +20,7 @@ namespace MasterMind
 
         public static int Iniciar(bool principiante, bool medio, bool avanzado)
         {
-
+            // método inicial para designar la dificultad
             int dificultat = 0;
 
             if (principiante)
@@ -64,7 +64,8 @@ namespace MasterMind
             // printamos los colores secretos
             for (int i = 0; i < 4; i++) // recorremos el array de objetos
             {
-                MM.panel3.Controls.Add(bolesSecretes[i]);              
+                bolesSecretes[i].Visible = false;
+                MM.panel3.Controls.Add(bolesSecretes[i]);
             }
 
             // generamos un array de bolas vacias
@@ -74,21 +75,26 @@ namespace MasterMind
 
         public static void enviar_Click(System.Windows.Forms.Button sender, EventArgs e, PictureBox[] bolasNuevas, int numero, Color[] colors, Master_Mind MM, PictureBox[] solucio)
         {
+            // boton de enviar click que se usa en las bolas para hacer las comprobaciones de cada bola
+            // si estan todas llenas != blanco
             if (bolasNuevas[0].BackColor!=Color.White&& bolasNuevas[1].BackColor != Color.White && bolasNuevas[2].BackColor != Color.White && bolasNuevas[3].BackColor != Color.White)
             {
+                // creamos una nueva línea de bolas
                 Methods.crear_linea_bola(4, colors, MM, numero + 1, solucio);
-                sender.Visible= false;
-                Methods.CheckResults(bolasNuevas, solucio, MM, numero);
+
+                sender.Visible= false; // hacemos el boton invisible
+                Methods.CheckResults(bolasNuevas, solucio, MM, numero); //comrpobamos los resultados
             }
-            
         }
 
         public static void copiarColor_Click(object sender, EventArgs e, PictureBox pinzell, Master_Mind MM)
         {
+            // boton para seleccionar el color de la bola
             MM.pictureBox1.BackColor = pinzell.BackColor;
         }
         public static void pegarColor_Click(object sender, EventArgs e, PictureBox pinzell, Master_Mind MM)
         {
+            // boton para cambiar el color de la bola
             pinzell.BackColor = MM.pictureBox1.BackColor;
         }
 
@@ -110,10 +116,5 @@ namespace MasterMind
                 box.BackColor = MyDialog.Color;
             }
         }
-
-
-
-
-
     }
 }
