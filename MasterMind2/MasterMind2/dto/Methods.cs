@@ -139,14 +139,6 @@ namespace MasterMind
             int[] posicionsNegres = new int[4] { 0,0,0,0};
             PictureBox[] resultat = new PictureBox[solucio.Length];
 
-            // comprobamos y printamos los intentos
-            MM.label3.Text = ("Intentos Restantes: " + (9 - offset));
-            if (offset == 9) // si ha llegado a 10 intentos, terminamos el juego
-            {
-                MessageBox.Show("GAME OVER");
-                Application.Exit();
-            }
-
             // recorremos el array de la solución comparándolo con el array pasado
             for (int i = 0; i < linea.Length; i++)
             {
@@ -204,6 +196,14 @@ namespace MasterMind
             else // si no reseteamos el contador para la siguiente entrada
             {
                 guanyar = 0;
+            }
+            
+            // comprobamos y printamos los intentos
+            MM.label3.Text = ("Intentos Restantes: " + (9 - offset));
+            if (offset == 9) // si ha llegado a 10 intentos, terminamos el juego
+            {
+                MessageBox.Show("GAME OVER");
+                Application.Exit();
             }
 
 
